@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fff9c4</color>
+    <color name="colorPrimaryDark">#bdbdbd</color>
+    <color name="colorAccent">#f9a825</color>
+    <color name="color_listitem_background">#fafafa</color>
+    <color name="color_light_yellow">#fffde7</color>
+</resources>
