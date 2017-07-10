@@ -84,22 +84,18 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
 
-        //Checking the state of the internet connection with ConnectivityManager:
-        //1: Make a new Conn.Manager:
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        //2: Get information about current network:
-        NetworkInfo networkInfo = (NetworkInfo) connectivityManager.getActiveNetworkInfo();
-        //3: If there is network, fetch the data:
-        if (networkInfo != null && networkInfo.isConnected()) {
-            //4: Create LoaderManager (to interact with loaders):
+
+        //Fetching first the isConnected method (that checks the internet connection) and then creating the loader:
+        if (isConnected()) {
+            //Create LoaderManager (to interact with loaders):
             LoaderManager loaderManager = getLoaderManager();
-            //5: Initialize the loader; Pass ID, null for Bundle, and this activity:
+            //Initialize the loader; Pass ID, null for Bundle, and this activity:
             loaderManager.initLoader(ARTICLE_LOADER_ID, null, this);
         } else {
             //Otherwise display error, but first hide the loading indicator
             View loadingIndicator = findViewById(R.id.loading_spinner);
             loadingIndicator.setVisibility(View.GONE);
-            mEmptyTextView.setText(R.string.no_internet);
+            mEmptyTextView.setText(R.string.string_no_internet);
         }
 
 
@@ -107,10 +103,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     //Here: LoaderCallbacks() interface + its 3 methods;
     // 1. onCreateLoader() = Create & return a new loader for the given ID
-    // (= fetches the book data from web server)
+    // (= fetches the news data from web server)
     // 2. onLoadFinished() = Called when previously created loader has finished its loading
     // (= loader has finished downloading data on the background thread, so here updating
-    // the UI with the list of books)
+    // the UI with the list of articles)
     // 3. onLoadReset() = Called when prev. created loader is being reset, making its data unavailable
     // (= E.g. If decided to download data from new URL (bc of new search term), current list
     // should be cleared)
@@ -119,8 +115,18 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     public Loader<List<ArticleDetails>> onCreateLoader(int id, Bundle bundle) {
         Log.i(LOG_TAG, "TEST: Here MainActivity's onCreateLoader() called");
 
-        return new ArticleLoader(this, FINAL_URL);
+        //Checking the internet connection:
+        if (isConnected()) {
+            return new ArticleLoader(this, FINAL_URL);
+        } else {
+            //Otherwise display error, but first hide the loading indicator
+            View loadingIndicator = findViewById(R.id.loading_spinner);
+            loadingIndicator.setVisibility(View.GONE);
+            mEmptyTextView.setText(R.string.string_no_internet);
+            return null;
+        }
     }
+
 
     //Here: Updating the dataset in the adapter to update the UI.
     @Override
@@ -130,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         ProgressBar hideSpinner = (ProgressBar) findViewById(R.id.loading_spinner);
         hideSpinner.setVisibility(View.GONE);
         //Informing that there's no articles.
-        mEmptyTextView.setText(R.string.no_articles);
+        mEmptyTextView.setText(R.string.string_no_articles);
 
         //Clearing the adapter from previous data:
         mAdapter.clear();
@@ -156,8 +162,37 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     //This is for the swipe & refresh; when swiped, the loader (& therefore articles) are refreshed:
     @Override
     public void onRefresh() {
-        getLoaderManager().restartLoader(ARTICLE_LOADER_ID, null, this);
 
+        //First checking the internet connection:
+        if (isConnected()) {
+            getLoaderManager().restartLoader(ARTICLE_LOADER_ID, null, this);
 
+        } else {
+            //Hiding the loading spinner:
+            ProgressBar hideSpinner = (ProgressBar) findViewById(R.id.loading_spinner);
+            hideSpinner.setVisibility(View.GONE);
+            //Informing that there's no articles.
+            mEmptyTextView.setText(R.string.string_no_internet);
+
+            //Clearing the adapter from previous data:
+            mAdapter.clear();
+
+            //Removing the refresh icon animation:
+            mSwipeRefreshLayout.setRefreshing(false);
+
+        }
+
+    }
+
+    //Helper method for internet connection checks:
+    public boolean isConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        //2: Get information about current network:
+        NetworkInfo networkInfo = (NetworkInfo) connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -28,16 +28,15 @@ import java.util.List;
 public final class QueryUtils {
 
     public static String LOG_TAG = QueryUtils.class.getName();
+    private static String titleValue;
+    private static String sectionValue;
+    private static String dateValue;
+    private static String bitmapValue;
 
     //This is here just to make sure no-one else builds QueryUtils object:
     private QueryUtils() {
 
     }
-
-    private static String titleValue;
-    private static String sectionValue;
-    private static String dateValue;
-    private static String bitmapValue;
 
     //This is going to return a list of retrieved objects:
     private static List<ArticleDetails> extractFeaturesFromJson(String articleJson) {
@@ -172,7 +171,7 @@ public final class QueryUtils {
                 Log.e(LOG_TAG, "Error in reading the stream, response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem with retrieving the book results " + e);
+            Log.e(LOG_TAG, "Problem with retrieving the article results " + e);
         } finally {
             //Finally closing the connections (since we're done)
             if (urlConnection != null) {
@@ -215,12 +214,10 @@ public final class QueryUtils {
     }
 
     //'Final' method: to combine everything:
-
     public static final List<ArticleDetails> fetchArticleData(String requestUrl) {
 
         //Url object created:
         URL url = createUrl(requestUrl);
-
         //Make the HTTP request to 'url' + get JSON response back
         String jsonResponse = null;
 
@@ -229,11 +226,9 @@ public final class QueryUtils {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Problem with making url request", e);
         }
-
         //Extract the relevant fields + make a list from them:
         List<ArticleDetails> fetchedArticles = extractFeaturesFromJson(jsonResponse);
         return fetchedArticles;
     }
-
 
 }

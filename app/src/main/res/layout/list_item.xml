@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_listitem_background"
@@ -10,7 +9,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:orientation="horizontal"
         android:textAppearance="?android:textAppearanceSmall">
 
@@ -18,12 +17,13 @@
             android:id="@+id/data_date"
             style="@style/small_textviews"
             android:layout_marginRight="8dp"
-            android:text="@string/date_placeholder" />
+            android:layout_marginEnd="8dp"
+            android:text="@string/textview_date_placeholder" />
 
         <TextView
             android:id="@+id/data_section"
             style="@style/small_textviews"
-            android:text="@string/section_placeholder" />
+            android:text="@string/textview_section_placeholder" />
 
     </LinearLayout>
 
@@ -36,13 +36,14 @@
             android:id="@+id/image_bitmap"
             style="@style/image_style"
             android:layout_gravity="center"
-            android:text="@string/placeholder_for_bitmap" />
+            android:contentDescription="@string/string_image_description"
+            android:text="@string/image_bitmap_placeholder" />
 
         <TextView
             android:id="@+id/data_title"
             style="@style/big_textview"
             android:layout_gravity="center"
-            android:text="@string/title_placeholder" />
+            android:text="@string/textview_title_placeholder" />
 
     </LinearLayout>
 

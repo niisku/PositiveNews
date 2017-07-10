@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Positive News</string>
-    <string name="date_placeholder">Date placeholder</string>
-    <string name="title_placeholder">Title placeholder</string>
-    <string name="author_placeholder">Author placeholder</string>
-    <string name="section_placeholder">Section placeholder</string>
-    <string name="text_for_extra_author_placeholder">Text for extra author placeholder</string>
-    <string name="no_internet">No internet connection.</string>
-    <string name="no_articles">No articles.</string>
-    <string name="placeholder_for_bitmap">Placeholder for Bitmap</string>
+    <string name="textview_date_placeholder">Date placeholder</string>
+    <string name="textview_title_placeholder">Title placeholder</string>
+    <string name="textview_author_placeholder">Author placeholder</string>
+    <string name="textview_section_placeholder">Section placeholder</string>
+    <string name="string_no_internet">No internet connection.</string>
+    <string name="string_no_articles">No articles.</string>
+    <string name="image_bitmap_placeholder">Placeholder for Bitmap</string>
+    <string name="string_image_description">Image</string>
 </resources>

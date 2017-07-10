@@ -32,6 +32,7 @@ public class ArticleDetails {
     public String getmDate() {
         return mDate;
     }
+
     public String getmUrl() {
         return mUrl;
     }

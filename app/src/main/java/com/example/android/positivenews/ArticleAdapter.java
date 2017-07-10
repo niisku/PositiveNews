@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 
 
-// This is a custom ArrayAdapter to properly display a list of Earthquake objects
+// This is a custom ArrayAdapter to properly display a list of Article objects
 // (= setting right data to right views etc.):
 
 public class ArticleAdapter extends ArrayAdapter<ArticleDetails> {
